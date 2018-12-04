@@ -1,13 +1,13 @@
-bright.a 1 :: burnished
-bright.a 2 :: burnished
-bright.a 3 :: burnished
-bright.a 4 :: burnished
-bright.a 5 :: burnished
-bright.a 6 :: burnished
+bright.a 1 :: shining
+bright.a 2 :: shining
+bright.a 3 :: shining
+bright.a 4 :: shining
+bright.a 5 :: shining
+bright.a 6 :: shining
 bright.a 7 :: brilliant
-bright.a 8 :: burnished
-bright.a 9 :: burnished
-bright.a 10 :: burnished
+bright.a 8 :: shining
+bright.a 9 :: shining
+bright.a 10 :: shining
 film.n 11 :: movie
 film.n 12 :: movie
 film.n 13 :: movie
@@ -18,16 +18,16 @@ film.n 17 :: movie
 film.n 18 :: movie
 film.n 19 :: movie
 film.n 20 :: movie
-take.v 21 :: get hold of
-take.v 22 :: get hold of
-take.v 23 :: get hold of
+take.v 21 :: assume
+take.v 22 :: assume
+take.v 23 :: assume
 take.v 24 :: occupy
-take.v 25 :: get hold of
-take.v 26 :: get hold of
-take.v 27 :: get hold of
-take.v 28 :: get hold of
-take.v 29 :: get hold of
-take.v 30 :: get hold of
+take.v 25 :: assume
+take.v 26 :: assume
+take.v 27 :: assume
+take.v 28 :: remove
+take.v 29 :: assume
+take.v 30 :: assume
 tight.r 31 :: fast
 tight.r 32 :: fast
 tight.r 33 :: fast
@@ -48,15 +48,15 @@ bar.n 47 :: cake
 bar.n 48 :: saloon
 bar.n 49 :: cake
 bar.v 50 :: exclude
-cross.n 51 :: crisscross
-cross.n 52 :: crisscross
-cross.n 53 :: crisscross
-cross.n 54 :: crisscross
+cross.n 51 :: mark
+cross.n 52 :: mark
+cross.n 53 :: mark
+cross.n 54 :: mark
 cross.n 55 :: crown of thorns
-cross.n 56 :: crisscross
-cross.n 57 :: crisscross
-cross.n 58 :: crisscross
-cross.n 59 :: crisscross
+cross.n 56 :: mark
+cross.n 57 :: mark
+cross.n 58 :: mark
+cross.n 59 :: crown of thorns
 cross.a 60 :: transverse
 finally.r 61 :: at last
 finally.r 62 :: eventually
@@ -88,43 +88,43 @@ fix.v 87 :: set
 fix.v 88 :: set
 fix.v 89 :: get
 fix.v 90 :: set
-manage.v 91 :: wield
-manage.v 92 :: wield
-manage.v 93 :: wield
-manage.v 94 :: wield
-manage.v 95 :: wield
-manage.v 96 :: supervise
-manage.v 97 :: wield
-manage.v 98 :: wield
-manage.v 99 :: wield
-manage.v 100 :: supervise
-neat.a 101 :: refined
-neat.a 102 :: refined
-neat.a 103 :: refined
-neat.a 104 :: refined
-neat.a 105 :: refined
-neat.a 106 :: refined
-neat.a 107 :: refined
-neat.a 108 :: refined
-neat.a 109 :: refined
-neat.a 110 :: refined
-rich.a 111 :: fat
-rich.a 112 :: fat
-rich.a 113 :: fat
-rich.a 114 :: fat
-rich.a 115 :: fat
-rich.a 116 :: fat
-rich.a 117 :: fat
-rich.a 118 :: fat
-rich.a 119 :: fat
-rich.a 120 :: fat
+manage.v 91 :: handle
+manage.v 92 :: pull off
+manage.v 93 :: pull off
+manage.v 94 :: pull off
+manage.v 95 :: pull off
+manage.v 96 :: pull off
+manage.v 97 :: pull off
+manage.v 98 :: pull off
+manage.v 99 :: pull off
+manage.v 100 :: pull off
+neat.a 101 :: tasteful
+neat.a 102 :: tasteful
+neat.a 103 :: tasteful
+neat.a 104 :: tasteful
+neat.a 105 :: tasteful
+neat.a 106 :: tasteful
+neat.a 107 :: tasteful
+neat.a 108 :: tasteful
+neat.a 109 :: tasteful
+neat.a 110 :: tasteful
+rich.a 111 :: productive
+rich.a 112 :: productive
+rich.a 113 :: productive
+rich.a 114 :: plentiful
+rich.a 115 :: productive
+rich.a 116 :: productive
+rich.a 117 :: productive
+rich.a 118 :: productive
+rich.a 119 :: productive
+rich.a 120 :: full-bodied
 severely.r 121 :: badly
 severely.r 122 :: badly
 severely.r 123 :: badly
 severely.r 124 :: badly
 severely.r 125 :: badly
 severely.r 126 :: hard
-severely.r 127 :: badly
+severely.r 127 :: hard
 severely.r 128 :: badly
 severely.r 129 :: badly
 severely.r 130 :: badly
@@ -134,7 +134,7 @@ stand.v 133 :: remain firm
 stand.v 134 :: resist
 stand.v 135 :: resist
 stand.v 136 :: stand up
-stand.n 137 :: base
+stand.n 137 :: stall
 stand.n 138 :: base
 stand.n 139 :: bandstand
 stand.n 140 :: base
@@ -154,10 +154,10 @@ wild.a 153 :: untamed
 wild.a 154 :: untamed
 wild.a 155 :: untamed
 wild.a 156 :: untamed
-wild.a 157 :: untamed
+wild.a 157 :: violent
 wild.a 158 :: untamed
 wild.a 159 :: untamed
-wild.n 160 :: natural state
+wild.n 160 :: state of nature
 can.n 161 :: tin
 can.n 162 :: tin
 can.n 163 :: tin
@@ -178,16 +178,16 @@ dark.n 177 :: night
 dark.n 178 :: night
 dark.n 179 :: night
 dark.n 180 :: night
-examination.n 181 :: examen
+examination.n 181 :: interrogation
 examination.n 182 :: test
 examination.n 183 :: scrutiny
 examination.n 184 :: scrutiny
 examination.n 185 :: scrutiny
 examination.n 186 :: scrutiny
 examination.n 187 :: scrutiny
-examination.n 188 :: scrutiny
+examination.n 188 :: test
 examination.n 189 :: scrutiny
-examination.n 190 :: scrutiny
+examination.n 190 :: test
 fear.v 191 :: dread
 fear.v 192 :: dread
 fear.v 193 :: dread
@@ -198,19 +198,19 @@ fear.v 197 :: dread
 fear.v 198 :: dread
 fear.v 199 :: dread
 fear.v 200 :: dread
-forget.v 201 :: bury
-forget.v 202 :: bury
-forget.v 203 :: bury
-forget.v 204 :: bury
-forget.v 205 :: bury
-forget.v 206 :: bury
-forget.v 207 :: bury
-forget.v 208 :: bury
-forget.v 209 :: bury
-forget.v 210 :: bury
+forget.v 201 :: leave
+forget.v 202 :: leave
+forget.v 203 :: leave
+forget.v 204 :: leave
+forget.v 205 :: leave
+forget.v 206 :: leave
+forget.v 207 :: leave
+forget.v 208 :: leave
+forget.v 209 :: leave
+forget.v 210 :: leave
 gall.n 211 :: saddle sore
 gall.n 212 :: saddle sore
-gall.n 213 :: saddle sore
+gall.n 213 :: insolence
 gall.n 214 :: saddle sore
 gall.n 215 :: saddle sore
 gall.n 216 :: insolence
@@ -223,19 +223,19 @@ grim.a 222 :: stern
 grim.a 223 :: blue
 grim.a 224 :: stern
 grim.a 225 :: stern
-grim.a 226 :: stern
+grim.a 226 :: dour
 grim.a 227 :: stern
 grim.a 228 :: stern
 grim.a 229 :: stern
 grim.a 230 :: stern
-lie.v 231 :: lie down
-lie.v 232 :: lie down
-lie.v 233 :: lie down
+lie.v 231 :: rest
+lie.v 232 :: rest
+lie.v 233 :: rest
 lie.v 234 :: rest
-lie.v 235 :: lie down
-lie.v 236 :: lie down
-lie.v 237 :: lie down
-lie.v 238 :: lie down
+lie.v 235 :: rest
+lie.v 236 :: rest
+lie.v 237 :: rest
+lie.v 238 :: rest
 lie.v 239 :: rest
 lie.v 240 :: lie down
 nasty.a 241 :: awful
@@ -248,7 +248,7 @@ nasty.a 247 :: awful
 nasty.a 248 :: awful
 nasty.a 249 :: awful
 nasty.a 250 :: awful
-nearly.r 251 :: closely
+nearly.r 251 :: intimately
 nearly.r 252 :: almost
 nearly.r 253 :: almost
 nearly.r 254 :: almost
@@ -288,13 +288,13 @@ rough.a 287 :: unsmooth
 rough.a 288 :: unsmooth
 rough.a 289 :: unsmooth
 rough.a 290 :: unsmooth
-run.v 291 :: run away
+run.v 291 :: race
 run.v 292 :: run away
-run.v 293 :: run away
+run.v 293 :: extend
 run.v 294 :: run away
 run.v 295 :: run away
 run.v 296 :: run away
-run.v 297 :: run away
+run.v 297 :: extend
 run.v 298 :: run away
 run.v 299 :: execute
 run.v 300 :: run away

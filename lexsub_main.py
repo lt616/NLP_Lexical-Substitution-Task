@@ -46,6 +46,44 @@ def smurf_predictor(context):
 
     return 'smurf'
 
+# Function best_predictor() is my own solution, it is based on part 03 implementation. 
+# I improved part03 with the help of Morphy.
+def best_predictor(context):
+    stop_words_dict = generate_dict(stopwords.words('english'))
+    context_with_morphy = add_morphy(context.left_context + [context.lemma] + context.right_context)
+    context_dict = generate_dict(context_with_morphy)
+
+    max = -1
+    max_synsets = []
+
+    for lexeme in wn.lemmas(context.lemma, pos=context.pos):
+        synset_lemma = lexeme.synset()
+        # check definition and examples
+        occur_count = check_definition_examples(synset_lemma, stop_words_dict, context_dict)
+
+        # check hypernyms
+        for hypernyms in synset_lemma.hypernyms():
+            occur_count += check_definition_examples(hypernyms, stop_words_dict, context_dict)
+
+        if occur_count > max:
+            max = occur_count
+            max_synsets = [lexeme]
+        elif occur_count == max:
+            max_synsets.append(lexeme)
+
+    return lesk_predictor_helper(max_synsets, context)
+
+def add_morphy(context_arr):
+    context_morphy = []
+    
+    for lemma in context_arr:
+        lemma_morphy = wn.morphy(lemma)
+        if not lemma_morphy is None and not lemma_morphy == lemma:
+            context_morphy.append(lemma_morphy)
+
+    return context_arr + context_morphy
+
+
 def wn_frequency_predictor(context):
     possible_synonyms = []
     occur_words = {}
@@ -197,18 +235,44 @@ class Word2VecSubst(object):
         left_context = self.remove_stop_words(stop_words_dict, context.left_context)
         right_context = self.remove_stop_words(stop_words_dict, context.right_context)
 
-        print(left_context)
-        print(right_context)
+        # print(left_context)
+        # print(right_context)
 
-        left_context_limit = limit_context_len(left_context)
-        right_context_limit = limit_context_len(right_context)
+        left_context_limit = self.limit_left_context_len(left_context)
+        right_context_limit = self.limit_right_context_len(right_context)
 
-        print(left_context_limit)
-        print(right_context_limit)
+        # print(left_context_limit)
+        # print(right_context_limit)
 
-        return None # replace for part 5
+        # Sum up sentence vector
+        vector = self.model.wv[context.lemma]
+        for lemma in left_context_limit:
+            try:
+                vector = np.add(vector, self.model.wv[lemma])
+            except:
+                continue
+        for lemma in right_context_limit:
+            try:
+                vector = np.add(vector, self.model.wv[lemma])
+            except:
+                continue
+        possible_synonyms = get_candidates(context.lemma, context.pos)
 
-    def remove_stop_words(stop_words_dict, context_arr):
+        max = -1
+        res = 'smurf'
+
+        for synonyms in possible_synonyms:
+            try:
+                similarity = cos(self.model.wv[synonyms], vector)
+                if similarity > max:
+                    max = similarity
+                    res = synonyms
+            except:
+                continue
+
+        return res
+
+    def remove_stop_words(self, stop_words_dict, context_arr):
         res = []
 
         for lemma in context_arr:
@@ -216,6 +280,30 @@ class Word2VecSubst(object):
                 res.append(lemma)
 
         return res
+
+    def limit_left_context_len(self, context_arr):
+        if len(context_arr) == 0:
+            return context_arr
+
+        size = 5
+        if len(context_arr) < 5:
+            size = len(context_arr)
+
+        return context_arr[-size:]
+
+    def limit_right_context_len(self, context_arr):
+        if len(context_arr) == 0:
+            return context_arr
+
+        size = 5
+        if len(context_arr) < 5:
+            size = len(context_arr)
+
+        return context_arr[:size]
+
+def cos(v1,v2):
+    return np.dot(v1,v2) / (np.linalg.norm(v1)*np.linalg.norm(v2))
+
 
 if __name__=="__main__":
 
@@ -226,13 +314,14 @@ if __name__=="__main__":
     W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
     predictor = Word2VecSubst(W2VMODEL_FILENAME)
 
-    print("MATCH")
     # get_candidates('slow','a')
 
     for context in read_lexsub_xml(sys.argv[1]):
         #print(context)  # useful for debugging
 
-        prediction = predictor.predict_nearest(context)
+        prediction = predictor.predict_nearest_with_context(context)
+
+        # prediction = predictor.predict_nearest(context)
 
         # prediction = wn_frequency_predictor(context)
 

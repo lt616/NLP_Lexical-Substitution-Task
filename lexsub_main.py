@@ -58,6 +58,11 @@ def best_predictor(context):
 
     for lexeme in wn.lemmas(context.lemma, pos=context.pos):
         synset_lemma = lexeme.synset()
+
+        # if len == 1 then current synset contains only target context, drop it!
+        if len(synset_lemma.lemmas()) == 1:
+            continue
+
         # check definition and examples
         occur_count = check_definition_examples(synset_lemma, stop_words_dict, context_dict)
 
@@ -80,7 +85,7 @@ def add_morphy(context_arr):
         lemma_morphy = wn.morphy(lemma)
         if not lemma_morphy is None and not lemma_morphy == lemma:
             context_morphy.append(lemma_morphy)
-
+    # print(context_morphy)
     return context_arr + context_morphy
 
 
@@ -119,6 +124,11 @@ def wn_simple_lesk_predictor(context):
 
     for lexeme in wn.lemmas(context.lemma, pos=context.pos):
         synset_lemma = lexeme.synset()
+
+        # if len == 1 then current synset contains only target context, drop it!
+        if len(synset_lemma.lemmas()) == 1:
+            continue
+
         # check definition and examples
         occur_count = check_definition_examples(synset_lemma, stop_words_dict, context_dict)
 
@@ -148,6 +158,9 @@ def lesk_predictor_helper(synsets, context):
 def max_lemma(synset, context):
     max = -1
     res = 'smurf'
+
+    if synset is None:
+        return res
 
     occur_words = {}
 
@@ -310,22 +323,24 @@ if __name__=="__main__":
     # At submission time, this program should run your best predictor (part 6).
 
     # W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
-    print("loading..")
-    W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
-    predictor = Word2VecSubst(W2VMODEL_FILENAME)
+    # print("loading..")
+    # W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
+    # predictor = Word2VecSubst(W2VMODEL_FILENAME)
 
     # get_candidates('slow','a')
 
     for context in read_lexsub_xml(sys.argv[1]):
         #print(context)  # useful for debugging
 
-        prediction = predictor.predict_nearest_with_context(context)
+        # prediction = best_predictor(context)
+
+        # prediction = predictor.predict_nearest_with_context(context)
 
         # prediction = predictor.predict_nearest(context)
 
         # prediction = wn_frequency_predictor(context)
 
-        # prediction = wn_simple_lesk_predictor(context)
+        prediction = wn_simple_lesk_predictor(context)
 
         # print(get_candidates(context.lemma, context.pos))
 

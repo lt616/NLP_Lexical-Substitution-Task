@@ -176,27 +176,69 @@ class Word2VecSubst(object):
         self.model = gensim.models.KeyedVectors.load_word2vec_format(filename, binary=True)    
 
     def predict_nearest(self, context):
+        possible_synonyms = get_candidates(context.lemma, context.pos)
 
-        return None # replace for part 4
+        max = -1
+        res = 'smurf'
+        for synonyms in possible_synonyms:
+            try:
+                similarity = self.model.similarity(context.lemma, synonyms)
+                if similarity > max:
+                    max = similarity
+                    res = synonyms
+            except:
+                continue
+
+        return res
 
     def predict_nearest_with_context(self, context): 
+        stop_words_dict = generate_dict(stopwords.words('english'))
+
+        left_context = self.remove_stop_words(stop_words_dict, context.left_context)
+        right_context = self.remove_stop_words(stop_words_dict, context.right_context)
+
+        print(left_context)
+        print(right_context)
+
+        left_context_limit = limit_context_len(left_context)
+        right_context_limit = limit_context_len(right_context)
+
+        print(left_context_limit)
+        print(right_context_limit)
+
         return None # replace for part 5
+
+    def remove_stop_words(stop_words_dict, context_arr):
+        res = []
+
+        for lemma in context_arr:
+            if not lemma in stop_words_dict:
+                res.append(lemma)
+
+        return res
 
 if __name__=="__main__":
 
     # At submission time, this program should run your best predictor (part 6).
 
     # W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
-    # predictor = Word2VecSubst(W2VMODEL_FILENAME)
+    print("loading..")
+    W2VMODEL_FILENAME = 'GoogleNews-vectors-negative300.bin.gz'
+    predictor = Word2VecSubst(W2VMODEL_FILENAME)
 
+    print("MATCH")
     # get_candidates('slow','a')
 
     for context in read_lexsub_xml(sys.argv[1]):
         #print(context)  # useful for debugging
 
+        prediction = predictor.predict_nearest(context)
+
         # prediction = wn_frequency_predictor(context)
 
-        prediction = wn_simple_lesk_predictor(context)
+        # prediction = wn_simple_lesk_predictor(context)
+
+        # print(get_candidates(context.lemma, context.pos))
 
         # prediction = smurf_predictor(context) 
         print("{}.{} {} :: {}".format(context.lemma, context.pos, context.cid, prediction))

@@ -47,7 +47,9 @@ def smurf_predictor(context):
     return 'smurf'
 
 # Function best_predictor() is my own solution, it is based on part 03 implementation. 
-# I improved part03 with the help of Morphy.
+# I improved part03 with the help of Morphy. When search overlapping, the morphy of each context
+# is also included so that the match can be more precise.
+# My implementation improve part03 by 1% in both precision and recall by average
 def best_predictor(context):
     stop_words_dict = generate_dict(stopwords.words('english'))
     context_with_morphy = add_morphy(context.left_context + [context.lemma] + context.right_context)
@@ -64,11 +66,11 @@ def best_predictor(context):
             continue
 
         # check definition and examples
-        occur_count = check_definition_examples(synset_lemma, stop_words_dict, context_dict)
+        occur_count = best_check_definition_examples(synset_lemma, stop_words_dict, context_dict)
 
         # check hypernyms
         for hypernyms in synset_lemma.hypernyms():
-            occur_count += check_definition_examples(hypernyms, stop_words_dict, context_dict)
+            occur_count += best_check_definition_examples(hypernyms, stop_words_dict, context_dict)
 
         if occur_count > max:
             max = occur_count
@@ -77,6 +79,22 @@ def best_predictor(context):
             max_synsets.append(lexeme)
 
     return lesk_predictor_helper(max_synsets, context)
+
+def best_check_definition_examples(synset_lemma, stop_words_dict, context_dict):
+    occur_count = 0
+
+    # check definition
+    for token in tokenize(synset_lemma.definition()):
+        if not token in stop_words_dict and (token in context_dict or wn.morphy(token) in context_dict):
+            occur_count += 1
+
+    # check examples
+    for example in synset_lemma.examples():
+        for token in tokenize(example):
+            if not token in stop_words_dict and (token in context_dict or wn.morphy(token) in context_dict):
+                occur_count += 1
+
+    return occur_count
 
 def add_morphy(context_arr):
     context_morphy = []
@@ -87,7 +105,6 @@ def add_morphy(context_arr):
             context_morphy.append(lemma_morphy)
     # print(context_morphy)
     return context_arr + context_morphy
-
 
 def wn_frequency_predictor(context):
     possible_synonyms = []
@@ -181,21 +198,6 @@ def max_lemma(synset, context):
             res = word
 
     return res
-
-# def non_overlap_predictor(context):
-#     max = -1
-#     res = 'smurf'
-#     max_synset = None
-
-#     for lexeme in wn.lemmas(context.lemma, pos=context.pos):
-#         if lexeme.count() > max:
-#             max_synset = lexeme.synset()
-#             max = lexeme.count()
-
-#     if max_synset is None:
-#         return res
-
-#     return max_lemma(max_synset, context)
 
 def check_definition_examples(synset_lemma, stop_words_dict, context_dict):
     occur_count = 0
@@ -332,7 +334,7 @@ if __name__=="__main__":
     for context in read_lexsub_xml(sys.argv[1]):
         #print(context)  # useful for debugging
 
-        # prediction = best_predictor(context)
+        prediction = best_predictor(context)
 
         # prediction = predictor.predict_nearest_with_context(context)
 
@@ -340,7 +342,7 @@ if __name__=="__main__":
 
         # prediction = wn_frequency_predictor(context)
 
-        prediction = wn_simple_lesk_predictor(context)
+        # prediction = wn_simple_lesk_predictor(context)
 
         # print(get_candidates(context.lemma, context.pos))
 
